@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/multiselect/css/multi-select.css' />
+  </head>
+  <body>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                <a class="navbar-brand" href="#">Online Testing</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/candidates">Candidates <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/exams">Exams</a>
+                    <a class="nav-item nav-link" href="/topics">Topics</a>
+                    <a class="nav-item nav-link" href="/positions">Positions</a>
+                    <a class="nav-item nav-link" href="/questions">Questions</a>
+                  </div>
+                </div>
+                </div>
+              </nav>     
+              <div class="container" style="padding-top:70px;">
+          
+
+                <h3>Please select exams type of this candidate</h3>
+                <br>
+                <select multiple="multiple" id="my-select" name="my-select[]">
+                    <% exams.forEach((exam, index) => { %>
+                        <option value='<%= exam.ID%>' <% userExams.forEach((userExam, index) => { if(userExam.ID == exam.ID) { %> selected <% } }) %> ><%= exam.Name%></option>
+                    <% }) %>
+                </select>
+                <br>
+                <button type="button" id="approve" class="btn btn-primary">Send approved mail</button>
+
+<hr />
+        <footer>
+        <p>&copy; <%= new Date().getFullYear() %> - OnlineTesting</p>
+        </footer>
+    </div>
+    <script src="/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/multiselect/js/jquery.multi-select.js"></script>
+    <script>
+            $(document).ready(function(){
+              $('#my-select').multiSelect({ 
+                    keepOrder: true,
+                    afterSelect: function(values){
+                        $.ajax({
+                            url: '/candidates/addExam/' + values + '/to/' + <%= candidateId %> ,
+                            type: 'POST',
+                            success: function () {
+                                
+                            },
+                            error: function(xhr){
+                                alert("Something goes wrong");
+                            }
+                        });
+                    },
+                    afterDeselect: function(values){
+                        $.ajax({
+                            url: '/candidates/removeExam/' + values + '/to/' + <%= candidateId %>,
+                            type: 'POST',
+                            success: function () {
+                                
+                            },
+                            error: function(xhr){
+                                alert("Something goes wrong");
+                            }
+                        });
+                    }
+                });
+                $("#approve").click(function(){
+                    $('#approve').html("Sending...");
+                    $.ajax({
+                            url: '/candidates/sendApprovalMail/' + <%= candidateId %>,
+                            type: 'POST',
+                            success: function () {
+                                $('#approve').html("Mail Sended");
+                            },
+                            error: function(xhr){
+                                alert("Something goes wrong");
+                            },
+                            
+                        });
+                });
+            })
+        </script>
+</body>
+</html>

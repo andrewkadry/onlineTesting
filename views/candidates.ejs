@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/multiselect/css/multi-select.css' />
+  </head>
+  <body>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                <a class="navbar-brand" href="#">Online Testing</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/candidates">Candidates <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/exams">Exams</a>
+                    <a class="nav-item nav-link" href="/topics">Topics</a>
+                    <a class="nav-item nav-link" href="/positions">Positions</a>
+                    <a class="nav-item nav-link" href="/questions">Questions</a>
+                  </div>
+                </div>
+                </div>
+              </nav>     
+              <div class="container" style="padding-top:70px;">
+          
+                <h3>Candidates Registration</h3>
+                <br>
+                <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Postion</th>
+                            <th scope="col">CV</th>
+                            <th scope="col">Approved</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <% candidates.forEach((candidate, index) => { %>
+                                <tr>
+                                    <th scope="row"><%= candidate.ID %></th>
+                                    <td><%= candidate.CandidateName %></td>
+                                    <td><%= candidate.Email %></td>
+                                    <td><%= candidate.Phone %></td>
+                                    <td><%= candidate.PositionName %></td>
+                                    <td><a href="/candidates/cv/<%= candidate.ID %>">Download</a></td>
+                                    <% if(candidate.Approved == 1) {%>
+                                        <th>Yes</th>
+                                    <%} else {%>
+                                        <td><a href="/candidates/approve/<%= candidate.ID %>">Approve</a></td>
+                                    <%}%>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+
+                    <hr />
+        <footer>
+        <p>&copy; <%= new Date().getFullYear() %> - OnlineTesting</p>
+        </footer>
+    </div>
+    <script src="/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
