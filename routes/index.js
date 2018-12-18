@@ -1,27 +1,24 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser')
 
-router.get('/', function (req, res) {
-    res.sendFile('login');
+/* GET registration page. */
+router.get('/', function(req, res, next) {
+  var sql = "SELECT * FROM `position`";
+  db.query(sql, function (err, result) {
+    if (err)
+      return res.status(500).send(err);
+    res.render('index', { title: 'Registration', positions: result });
+  });
 });
 
-
-router.post('/route', function (req, res) {
-    var data = JSON.stringify(req.body);
-    data = JSON.parse(data);
-    if (data.password != data.confirm) {
-        res.send("passwords not equal");
-    }
-    else {
-        res.send("passwords equal :D ");
-
-
-    }
+/* GET candidate login page. */
+router.get('/login', function(req, res, next) {
+    res.render('candidateLogin', { title: 'Login' });
 });
 
-
-
-
+/* GET candidate profile page. */
+router.get('/profile', function(req, res, next) {
+  res.render('candidateProfile', { title: 'Profile' });
+});
 
 module.exports = router;
