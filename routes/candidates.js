@@ -84,6 +84,7 @@ router.post('/sendApprovalMail/:candidateId', function (req, res, next) {
             if (err)
                 return res.status(500).send("not sended");
             else
+                var sql2 = "UPDATE `candidate` SET `Approved`= 1 WHERE ID = " + candidateId;
                 db.query(sql2, function (err, result) {
                     if (err)
                         return res.status(500).send(err);
