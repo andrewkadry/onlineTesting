@@ -18,10 +18,10 @@ var app = express();
 
 // create connection to database
 var db = mysql.createConnection ({
-  host: 'localhost',
-  user: 'id6928100_onlinetestingia',
-  password: 'onlinetestingpassword',
-  database: 'id6928100_onlinetestingia',
+  host: 'sql7.freemysqlhosting.net',
+  user: 'sql7270623',
+  password: 'YxNshyjAIZ',
+  database: 'sql7270623',
   multipleStatements: true
 });
 
