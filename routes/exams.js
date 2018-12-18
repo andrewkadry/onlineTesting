@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-/* GET add exam page */
+/* GET add exam page ... */
 router.get('/add', function(req, res, next) {
   res.render('addExam', { title: 'Exams', name: "", error: "" });
 });
@@ -76,7 +76,7 @@ router.delete('/delete/:id', function(req, res, next) {
   db.query(sql, function (err, result) {
     if (err)
       return res.status(500).send(err);
-    return res.status(200).send("Item deleted sucessfully");    
+    return res.status(200).send("Item deleted sucessfully");
   });
 });
 
